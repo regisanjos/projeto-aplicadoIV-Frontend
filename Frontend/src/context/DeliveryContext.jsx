@@ -1,19 +1,19 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
 const DeliveryContext = createContext();
 
-const DeliveryContextProvider = ({ children }) => {
-    const [deliverys, setDeliverys] = useState([]);
-    return (
-        <DeliveryContext.Provider
-            value={{
-                deliverys,
-                setDeliverys
-            }}
-        >
-            {children}
-        </DeliveryContext.Provider>
-    );
-};
+export const useDelivery = () => useContext(DeliveryContext);
 
-export { DeliveryContext, DeliveryContextProvider };
+export const DeliveryProvider = ({ children }) => {
+  const [deliveries, setDeliveries] = useState([]);
+
+  const addDelivery = (newDelivery) => {
+    setDeliveries([...deliveries, newDelivery]);
+  };
+
+  return (
+    <DeliveryContext.Provider value={{ deliveries, addDelivery }}>
+      {children}
+    </DeliveryContext.Provider>
+  );
+};

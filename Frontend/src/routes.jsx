@@ -1,43 +1,34 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import AdminPage from "./pages/AdminPage";
-import Dashboard from "./components/Dashboard";
-import UserManagementPage from "./pages/UserManagementPage";
-import DonationManagementPage from "./pages/DonationManagementPage";
-import DeliveryManagementPage from "./pages/DeliveryManagementPage";
-import ProfilePage from "./pages/ProfilePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import CatastropheManagement from "./pages/CatastropheManagement";
-import PrivateRoute from "./components/PrivateRoute";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+import DonationManagementPage from './pages/DonationManagementPage';
+import DeliveryManagementPage from './pages/DeliveryManagementPage';
+import CatastropheManagementPage from './pages/CatastropheManagementPage';
+import UserManagementPage from './pages/UserManagementPage';
+import UserPage from './pages/UserPage';
 
-const App = () => {
-    return (
-        <Router>
-            <switch>
-                {/*rotas publicas*/}
-                <Route exact path="/" component={<HomePage />} />
-                <Route exact path="/login" component={<LoginPage />} />
-                
-                {/*rotas privadas*/}
-
-                <PrivateRoute exact path="/admin" component={<AdminPage />} />
-                <PrivateRoute exact path="/dashboard" component={<Dashboard />} />
-                <PrivateRoute exact path="/userManagement" component={<UserManagementPage />} />
-                <PrivateRoute exact path="/donationManagement" component={<DonationManagementPage />} />
-                <PrivateRoute exact path="/deliveryManagement" component={<DeliveryManagementPage />} />
-                <PrivateRoute exact path="/profile" component={<ProfilePage />} />
-                <PrivateRoute exact path="/catastropheManagement" component={<CatastropheManagement />} />
-                
-
-                {/*rotas nao encontradas*/}
-
-                <Route path="*" component={<NotFoundPage />} />
-
-            </switch>
-        </Router>
-    );
+const PrivateRoute = ({ children, allowedRoles }) => {
+  const auth = useAuth();
+  return auth.user && allowedRoles.includes(auth.user.role) ? children : <Navigate to="/login" />;
 };
 
-export default Routes;
+const AppRoutes = () => (
+  <Router>
+    <Routes>
+      <Route path="/admin" element={<PrivateRoute allowedRoles={['admin']}><AdminPage /></PrivateRoute>} />
+      <Route path="/perfil" element={<PrivateRoute allowedRoles={['admin', 'doador', 'afetado']}><ProfilePage /></PrivateRoute>} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/dashboard" element={<PrivateRoute allowedRoles={['admin']}><DashboardPage /></PrivateRoute>} />
+      <Route path="/doacoes" element={<PrivateRoute allowedRoles={['doador', 'admin']}><DonationManagementPage /></PrivateRoute>} />
+      <Route path="/entregas" element={<PrivateRoute allowedRoles={['doador', 'admin']}><DeliveryManagementPage /></PrivateRoute>} />
+      <Route path="/catastrofes" element={<PrivateRoute allowedRoles={['admin']}><CatastropheManagementPage /></PrivateRoute>} />
+      <Route path="/usuarios" element={<PrivateRoute allowedRoles={['admin']}><UserManagementPage /></PrivateRoute>} />
+      <Route path="/afetado" element={<PrivateRoute allowedRoles={['afetado', 'admin']}><UserPage /></PrivateRoute>} />
+      <Route path="*" element={<Navigate to="/login" />} />
+    </Routes>
+  </Router>
+);
+
+export default AppRoutes;

@@ -1,15 +1,17 @@
-import React from "react";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Logout = () => {
-    const handleLogout = () => {
-        localStorage.clear();
-        window.location.reload();
-        console.log("usuario desconectado");
-    };
+  const auth = useAuth();
+  const navigate = useNavigate();
 
-    return (
-        <button onClick={handleLogout}>Sair</button>
-    );
-    };
+  const handleLogout = () => {
+    auth.logout();
+    navigate('/login');
+  };
+
+  return <button onClick={handleLogout}>Sair</button>;
+};
 
 export default Logout;

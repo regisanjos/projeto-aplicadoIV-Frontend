@@ -1,0 +1,19 @@
+.delivery-management-page {
+    padding: 20px;
+  }
+  
+  .delivery-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .delivery-table th, .delivery-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .delivery-table th {
+    background-color: #f9f9f9;
+  }
+  
