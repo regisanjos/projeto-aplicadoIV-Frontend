@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UserManagementPage.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const UserManagementPage = () => {
   const [users, setUsers] = useState([]);

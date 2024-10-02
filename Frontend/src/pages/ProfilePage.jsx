@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './ProfilePage.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const ProfilePage = () => {
   const [user, setUser] = useState({

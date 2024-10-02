@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './DeliveryManagementPage.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const DeliveryManagementPage = () => {
   const [deliveries, setDeliveries] = useState([]);

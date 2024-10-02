@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './CatastropheManagementPage.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const CatastropheManagementPage = () => {
   const [catastrophes, setCatastrophes] = useState([]);

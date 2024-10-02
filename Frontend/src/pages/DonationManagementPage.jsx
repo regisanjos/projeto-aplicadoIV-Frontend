@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './DonationManagementPage.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const DonationManagementPage = () => {
   const [donations, setDonations] = useState([]);
