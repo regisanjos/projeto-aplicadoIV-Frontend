@@ -7,6 +7,10 @@ import DonationManagementPage from './pages/DonationManagementPage';
 import DeliveryManagementPage from './pages/DeliveryManagementPage';
 import CatastropheManagementPage from './pages/CatastropheManagementPage';
 import UserManagementPage from './pages/UserManagementPage';
+import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFoundPage';
+import AdminPage from './pages/AdminPage';
+import ProfilePage from './pages/ProfilePage';
 import UserPage from './pages/UserPage';
 
 const PrivateRoute = ({ children, allowedRoles }) => {
@@ -17,16 +21,17 @@ const PrivateRoute = ({ children, allowedRoles }) => {
 const AppRoutes = () => (
   <Router>
     <Routes>
-      <Route path="/admin" element={<PrivateRoute allowedRoles={['admin']}><AdminPage /></PrivateRoute>} />
-      <Route path="/perfil" element={<PrivateRoute allowedRoles={['admin', 'doador', 'afetado']}><ProfilePage /></PrivateRoute>} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/dashboard" element={<PrivateRoute allowedRoles={['admin']}><DashboardPage /></PrivateRoute>} />
       <Route path="/doacoes" element={<PrivateRoute allowedRoles={['doador', 'admin']}><DonationManagementPage /></PrivateRoute>} />
       <Route path="/entregas" element={<PrivateRoute allowedRoles={['doador', 'admin']}><DeliveryManagementPage /></PrivateRoute>} />
       <Route path="/catastrofes" element={<PrivateRoute allowedRoles={['admin']}><CatastropheManagementPage /></PrivateRoute>} />
       <Route path="/usuarios" element={<PrivateRoute allowedRoles={['admin']}><UserManagementPage /></PrivateRoute>} />
+      <Route path="/admin" element={<PrivateRoute allowedRoles={['admin']}><AdminPage /></PrivateRoute>} />
+      <Route path="/perfil" element={<PrivateRoute allowedRoles={['admin', 'doador', 'afetado']}><ProfilePage /></PrivateRoute>} />
       <Route path="/afetado" element={<PrivateRoute allowedRoles={['afetado', 'admin']}><UserPage /></PrivateRoute>} />
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </Router>
 );
