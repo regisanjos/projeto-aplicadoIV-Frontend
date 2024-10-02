@@ -1,19 +1,19 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
-const DonationsContext = createContext();
+const DonationContext = createContext();
 
-const DonationsContextProvider = ({ children }) => {
-    const [donations, setDonations] = useState([]);
-    return (
-        <DonationsContext.Provider
-            value={{
-                donations,
-                setDonations
-            }}
-        >
-            {children}
-        </DonationsContext.Provider>
-    );
-};  
+export const useDonation = () => useContext(DonationContext);
 
-export { DonationsContext, DonationsContextProvider };
+export const DonationProvider = ({ children }) => {
+  const [donations, setDonations] = useState([]);
+
+  const addDonation = (newDonation) => {
+    setDonations([...donations, newDonation]);
+  };
+
+  return (
+    <DonationContext.Provider value={{ donations, addDonation }}>
+      {children}
+    </DonationContext.Provider>
+  );
+};
