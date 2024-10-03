@@ -1,31 +1,30 @@
 import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-/**
- * Mapa de rastreamento da localização.
- *
- * @param {object} location - Objeto com as coordenadas da localização (lat e lng).
- */
 const TrackingMap = ({ location }) => {
   const mapContainerStyle = {
     width: '100%',
     height: '400px',
-  }; 
+  };
+
+  if (!location || !location.lat || !location.lng) {
+    return <div>Coordenadas inválidas.</div>;
+  }
 
   const center = {
-    lat: location.lat, 
-    lng: location.lng, 
-  }; 
+    lat: location.lat,
+    lng: location.lng,
+  };
 
   try {
     return (
-      <LoadScript googleMapsApiKey="SUA_API_KEY_DO_GOOGLE_MAPS">
+      <LoadScript googleMapsApiKey={process.env.GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           zoom={10}
-          center={center} 
+          center={center}
         >
-          <Marker position={center} /> {/* Exibe um marcador na localização atual. */}
+          <Marker position={center} />
         </GoogleMap>
       </LoadScript>
     );
